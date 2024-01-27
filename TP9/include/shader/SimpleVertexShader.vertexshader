@@ -1,0 +1,14 @@
+#version 330 core
+
+layout(location = 0) in vec3 vertexPosition_modelspace;
+layout(location = 2) in vec2 vertexTexCoord; // Use the same variable as in the fragment shader
+
+out vec2 TexCoord; // Transmit texture coordinates to the fragment shader
+
+uniform mat4 MVP;
+
+void main()
+{
+    gl_Position = MVP * vec4(vertexPosition_modelspace, 1.0);
+    TexCoord = vertexTexCoord; // Transmit texture coordinates to the fragment shader
+}

@@ -1,0 +1,13 @@
+#version 330 core
+
+in vec2 TexCoord; // Use the same variable as in the vertex shader
+out vec4 FragColor;
+
+uniform sampler2D OurTexture;
+
+void main()
+{
+    // Use only texture coordinates
+    vec4 textureColor = texture(OurTexture, TexCoord);
+    FragColor = textureColor;
+}

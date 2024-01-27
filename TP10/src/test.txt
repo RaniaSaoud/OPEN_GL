@@ -1,0 +1,30 @@
+#version 330 core
+
+layout(location = 0) in vec3 VertexPosition; // Position of the vertex
+layout(location = 1) in vec3 VertexColor;    // Color of the vertex
+layout(location = 2) in vec3 VertexNormal;   // Normal of the vertex
+
+uniform mat4 Model;    // Model matrix
+uniform mat4 View;     // View matrix
+uniform mat4 Projection; // Projection matrix
+
+out vec3 FragmentColor; // Pass the color to the fragment shader
+out vec3 vNormal;       // Pass the normal to the fragment shader
+out vec3 vPos;          // Pass the position to the fragment shader
+
+void main(){
+    // Transform the vertex position into homogeneous coordinates
+    vec4 vertexPosition_homo = vec4(VertexPosition, 1.0);
+    
+    // Transform the normal into world space
+    vNormal = mat3(transpose(inverse(Model))) * VertexNormal;
+    
+    // Transform the vertex into world space
+    vPos = vec3(Model * vertexPosition_homo);
+    
+    // Calculate the final position of the vertex
+    gl_Position = Projection * View * Model * vertexPosition_homo;
+    
+    // Pass the vertex color to the fragment shader
+    FragmentColor = VertexColor;
+}
